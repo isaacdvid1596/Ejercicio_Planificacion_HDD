@@ -59,17 +59,43 @@ void FillQueue(int p) {
     auto rng = default_random_engine{};
     shuffle(begin(ordenLlegada), end(ordenLlegada), rng);
 
-    cout << "****************" << endl;
-
     for (int m : ordenLlegada) {
-        cout << m << endl;
+        colaPlanificacion.push_back(m);
+    }
+
+    cout << "*******ORDEN DE LLEGADA*********" << endl;
+
+    for (int n : ordenLlegada) {
+        cout << n << endl;
     }
 
 }
 
-//metodo para planificar la cola
+//metodo para planificar la cola FIFO
 
-void QueueScheduler(vector<int> colaPlanificacion) {
+void QueueSchedulerFIFO() {
+    
+
+    cout << "*****orden de planificacion FIFO*****" << endl;
+
+
+    for (int i: colaPlanificacion) {
+        cout << i << endl;
+    }
+    
+
+    
+}
+
+//metodo para planificar la cola FIFO
+
+void QueueSchedulerSSTF() {
+
+}
+
+//metodo para planificar la cola FIFO
+
+void QueueSchedulerCSCAN() {
 
 }
 
@@ -80,6 +106,7 @@ int main()
     int pistas = disk.numeroPistas;
 
     FillQueue(pistas);
-  
+
+    QueueSchedulerFIFO();
 }
 
