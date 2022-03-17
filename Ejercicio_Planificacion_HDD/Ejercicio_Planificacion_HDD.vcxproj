@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Disco.cpp" />
     <ClCompile Include="Ejercicio_Planificacion_HDD.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Disco.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

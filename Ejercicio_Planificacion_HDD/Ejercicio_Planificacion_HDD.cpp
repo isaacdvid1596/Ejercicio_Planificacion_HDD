@@ -1,31 +1,27 @@
 // Ejercicio_Planificacion_HDD.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
+#include "Disco.h"
 #include <iostream>
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <windows.h>
 #include <random>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 std::vector<int> ordenLlegada;
 std::vector<int> colaPlanificacion;
 
-class Disk {
-public:
-    int numeroPistas;
-};
-
-//simulador disco
-
-Disk DiskSimulation() {
+Disco DiskSimulation() {
     //crear nuevo disco
-    Disk disco;
-    int pistas;
+    Disco disco;
+    int numeroPistas;
     cout << "ingrese el numero de pistas del disco: " << endl;
-    cin >> pistas;
-    disco.numeroPistas = pistas;
+    cin >> numeroPistas;
+    disco.pistas = numeroPistas;
 
     return disco;
 }
@@ -39,11 +35,11 @@ void FillQueue(int p) {
     int* arr = new int[p];
 
     for (int i = 0; i < p; i++) {
-        arr[i] = (rand() % 10);
+        arr[i] = (rand() % 10 + 1);
     }
 
 
-    cout << "****************" << endl;
+
 
     //fill vector with array values
 
@@ -51,10 +47,11 @@ void FillQueue(int p) {
         ordenLlegada.push_back(arr[j]);
     }
 
-    for (int k : ordenLlegada) {
-        cout << k << endl;
-    }
-    
+    //for (int k : ordenLlegada) {
+    //    Sleep(1400);
+    //    cout << k << endl;
+    //}
+    //
 
     auto rng = default_random_engine{};
     shuffle(begin(ordenLlegada), end(ordenLlegada), rng);
@@ -63,11 +60,14 @@ void FillQueue(int p) {
         colaPlanificacion.push_back(m);
     }
 
-    cout << "*******ORDEN DE LLEGADA*********" << endl;
+    cout << "******LLENANDO COLA ORDEN DE LLEGADA CON VALORES ALEATORIOS******" << endl;
 
     for (int n : ordenLlegada) {
+        Sleep(1400);
         cout << n << endl;
     }
+
+    ordenLlegada.clear();
 
 }
 
@@ -80,11 +80,11 @@ void QueueSchedulerFIFO() {
 
 
     for (int i: colaPlanificacion) {
+        Sleep(1400);
         cout << i << endl;
     }
     
-
-    
+    colaPlanificacion.clear();
 }
 
 //metodo para planificar la cola FIFO
@@ -101,12 +101,20 @@ void QueueSchedulerCSCAN() {
 
 int main()
 {
-    Disk disk = DiskSimulation();
+    auto finish = system_clock::now() + 1min;
 
-    int pistas = disk.numeroPistas;
+    Disco disco = DiskSimulation();
 
-    FillQueue(pistas);
+    int pistas = disco.pistas;
 
-    QueueSchedulerFIFO();
+    do{
+
+        FillQueue(pistas);
+
+        QueueSchedulerFIFO();
+
+    } while (system_clock::now() < finish);
+
+
 }
 

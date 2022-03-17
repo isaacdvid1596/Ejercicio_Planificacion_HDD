@@ -18,5 +18,13 @@
     <ClCompile Include="Ejercicio_Planificacion_HDD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Disco.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Disco.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
