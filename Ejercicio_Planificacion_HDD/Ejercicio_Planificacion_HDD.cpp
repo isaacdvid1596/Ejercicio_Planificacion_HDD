@@ -38,9 +38,6 @@ void FillQueue(int p) {
         arr[i] = (rand() % 10 + 1);
     }
 
-
-
-
     //fill vector with array values
 
     for (int j = 0; j < p; j++) {
@@ -60,7 +57,7 @@ void FillQueue(int p) {
         colaPlanificacion.push_back(m);
     }
 
-    cout << "******LLENANDO COLA ORDEN DE LLEGADA CON VALORES ALEATORIOS******" << endl;
+   cout << "******LLENANDO COLA ORDEN DE LLEGADA CON VALORES ALEATORIOS******" << endl;
 
     for (int n : ordenLlegada) {
         Sleep(1400);
@@ -95,13 +92,68 @@ void QueueSchedulerSSTF() {
 
 //metodo para planificar la cola FIFO
 
-void QueueSchedulerCSCAN() {
+void QueueSchedulerCSCAN(int arr[], int head, int num_pistas) {
+   
 
+    int seek_count = 0;
+    int distance, pistActual;
+    int size = num_pistas;
+    vector<int> left, right;
+    vector<int> seek;
+
+
+    left.push_back(0);
+    right.push_back(num_pistas - 1);
+
+    for (int i = 0; i < num_pistas; i++) {
+        if (arr[i] < head) {
+            left.push_back(arr[i]);
+        }
+        if (arr[i] > head) {
+            right.push_back(arr[i]);
+        }
+    }
+
+    sort(left.begin(), left.end());
+    sort(right.begin(), right.end());
+
+    for (int i = 0; right.size(); i++) {
+        pistActual = right.at(i);
+
+        seek.push_back(pistActual);
+
+        distance = abs(pistActual - head);
+
+        seek_count+= distance;
+
+        head = pistActual;
+    }
+
+    head = 0;
+
+    seek_count += (num_pistas - 1);
+
+
+    for (int i = 0; left.size(); i++) {
+        pistActual = left.at(i);
+
+        seek.push_back(pistActual);
+
+        distance = abs(pistActual - head);
+
+        seek_count+=distance;
+
+        head = pistActual;
+    }
+
+    for (int i = 0; seek.size(); i++) {
+        cout << seek.at(i) << endl;
+    }
 }
 
 int main()
 {
-    auto finish = system_clock::now() + 1min;
+   auto finish = system_clock::now() + 1min;
 
     Disco disco = DiskSimulation();
 
@@ -111,10 +163,14 @@ int main()
 
         FillQueue(pistas);
 
+        int arr[10];
+
+        copy(colaPlanificacion.begin(), colaPlanificacion.end(), arr);
+
         QueueSchedulerFIFO();
 
+        /*QueueSchedulerCSCAN(arr, 5, pistas);*/
+
     } while (system_clock::now() < finish);
-
-
 }
 
